@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_study_project/home_page.dart';
 
-void main()=>runApp(MaterialApp(home: MyWidget()));
+void main()=>runApp(MaterialApp(
+  debugShowCheckedModeBanner: false,
+  home: MyWidget()));
 
 class MyWidget extends StatefulWidget {
   const MyWidget({super.key});

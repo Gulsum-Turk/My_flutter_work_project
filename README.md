@@ -1,12 +1,14 @@
-# my_study_project
+# my_flutter_work_project
 
-A new Flutter project.
+Flutter ile oluşturulacak pratik amaçlı basit bir uygulama örneğidir. 
+veritabanı olarak sqflite kullanılmıştır. 
 
-## Getting Started
+## Başlarken
 
-This project is a starting point for a Flutter application.
+Durum: Geliştiriliyor.
+Projenin so hali: 
 
-A few resources to get you started if this is your first Flutter project:
+
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
