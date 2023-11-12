@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_study_project/screens/market1.dart';
+import 'package:my_study_project/screens/market2.dart';
+import 'package:my_study_project/screens/market3.dart';
+import 'package:my_study_project/screens/urunler.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
