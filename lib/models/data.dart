@@ -1,4 +1,4 @@
-import 'package:flutter/src/widgets/editable_text.dart';
+
 import "package:sqflite/sqflite.dart" as sql;
 import 'package:flutter/foundation.dart';
 
@@ -8,16 +8,19 @@ class DatabaseHelper {
       id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         urun_ismi TEXT,
         urun_fiyat TEXT,
+        createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     )""");
     await database.execute("""CREATE TABLE market2(
       id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         urun_ismi TEXT,
         urun_fiyat TEXT,
+        createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     )""");
     await database.execute("""CREATE TABLE market3(
       id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         urun_ismi TEXT,
         urun_fiyat TEXT,
+        createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     )""");
   }
 
@@ -54,15 +57,15 @@ class DatabaseHelper {
   }
 
 // öğe ekleme
-  static Future<int> ekleme1(String? urun_ismi, String urun_fiyat,) async {
+  static Future<int> ekleme1(String? urun_ismi, String? urun_fiyat) async {
     final db = await DatabaseHelper.db();
     final data = {'urun_ismi': urun_ismi, 'urun_fiyat': urun_fiyat};
     final id = await db.insert('market1', data,
-        conflictAlgorithm: sql.ConflictAlgorithm.replace);
+    conflictAlgorithm: sql.ConflictAlgorithm.replace);
     return id;
   }
 
-  static Future<int> ekleme2(String? urun_ismi, String urun_fiyat) async {
+  static Future<int> ekleme2(String? urun_ismi, String? urun_fiyat) async {
     final db = await DatabaseHelper.db();
     final data = {'urun_ismi': urun_ismi, 'urun_fiyat': urun_fiyat};
     final id = await db.insert('market2', data,
@@ -70,7 +73,7 @@ class DatabaseHelper {
     return id;
   }
 
-  static Future<int> ekleme3(String? urun_ismi, String urun_fiyat) async {
+  static Future<int> ekleme3(String? urun_ismi, String? urun_fiyat) async {
     final db = await DatabaseHelper.db();
     final data = {'urun_ismi': urun_ismi, 'urun_fiyat': urun_fiyat};
     final id = await db.insert('market3', data,

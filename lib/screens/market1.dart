@@ -14,6 +14,8 @@ class _Market1State extends State<Market1> {
     final data = await DatabaseHelper.getir1();
     setState(() {
       veriler = data;
+      
+      
     });
   }
   @override
@@ -25,7 +27,7 @@ class _Market1State extends State<Market1> {
   final TextEditingController _isimController = TextEditingController();
   final TextEditingController _fiyatController = TextEditingController();
 
-  void eklemeEkrani(){
+  void eklemeEkrani(int? id){
     showModalBottomSheet(context: context, 
     elevation: 5,
     isScrollControlled:true,
@@ -55,10 +57,12 @@ class _Market1State extends State<Market1> {
           const SizedBox(height: 15,),
           ElevatedButton(
             onPressed:()async{
-              ekle();
-              Navigator.of(context).pop();
+               await ekle();
+              
+              
               _isimController.text = '';
               _fiyatController.text = '';
+              Navigator.of(context).pop();
             }, 
             child: Text('ürün ekle'))
         ],
@@ -74,13 +78,14 @@ class _Market1State extends State<Market1> {
       content: Text('Successfully deleted!'),
       backgroundColor: Colors.green,
     ));
+    _yenile();
   }
 
 
   Future<void>ekle()async{
-    await DatabaseHelper.ekleme1(_isimController.text, _fiyatController.text);
-    _yenile();
-  }
+   await DatabaseHelper.ekleme1(_isimController.text, _fiyatController.text);
+   _yenile(); // Ekleme işleminden sonra verileri yenilemek için eklendi
+}
 
   @override
   Widget build(BuildContext context) {
@@ -111,15 +116,15 @@ class _Market1State extends State<Market1> {
                 },
                 icon: Icon(Icons.arrow_back)),
           ),
-          body: veriler.isEmpty ?  Column(children: [Center(child: Text('İndirimde ürün bulunamadı'),),
+          body: veriler.isEmpty?Column(children: [Center(child: Text('İndirimde ürün bulunamadı'),),
           FloatingActionButton(
             child: Text('ekle'),
-            onPressed: () => eklemeEkrani())
+            onPressed: () => eklemeEkrani(null))
           ],)
           
           
           :Container(
-              margin: EdgeInsets.all(40),
+              margin: EdgeInsets.only(top:40, left:40, right:40, bottom:80),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 255, 255, 255),
                   border: Border.all(
@@ -132,21 +137,26 @@ class _Market1State extends State<Market1> {
                 return Builder(builder: (context) {
                  
                   return GestureDetector(
-                      child:  ListTile(
-                        title: Text(veriler[index]['urun_ismi']),
-                        subtitle: Text(veriler[index]['urun_fiyat']),
-                        trailing: SizedBox(
-                          width: 100,
-                          child: Row(
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () =>
-                                    sil(veriler[index]['id']),
-                              ),
-                            ],
-                          ),
-                        )),
+                      child:  Card(
+                        color: index%2==0?Color.fromARGB(255, 249, 205, 205):Color.fromARGB(255, 253, 237, 189),
+
+                        child: ListTile(
+                            
+                          title: Text(veriler[index]['urun_ismi'], style: TextStyle(fontWeight: FontWeight.bold),),
+                          subtitle: Text(veriler[index]['urun_fiyat'], style: TextStyle(fontWeight: FontWeight.w700),),
+                          trailing: SizedBox(
+                            width: 40,
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () =>
+                                      sil(veriler[index]['id']),
+                                ),
+                              ],
+                            ),
+                          )),
+                      ),
                       onTap: () => print('basıldı'));
                 });
               },
@@ -157,7 +167,10 @@ class _Market1State extends State<Market1> {
               
               
               
-              )),
+              ),
+          floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.add),
+            onPressed: ()=> eklemeEkrani(null)),),
    
     );
   }
